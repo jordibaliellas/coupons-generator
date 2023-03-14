@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { SequentialCouponGenerator } from './algorithms/sequential';
+import { RandomStringCouponGenerator } from './algorithms/random-string';
 import { CouponGeneratorController } from './coupon-generator.controller';
 import { CouponGenerator } from './interfaces/coupon.interface';
 
@@ -8,7 +8,7 @@ import { CouponGenerator } from './interfaces/coupon.interface';
   providers: [
     {
       provide: CouponGenerator,
-      useClass: SequentialCouponGenerator,
+      useClass: RandomStringCouponGenerator,
     },
   ],
 })

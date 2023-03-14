@@ -6,7 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const couponController = app.get(CouponGeneratorController);
   console.log('HIIII');
-  const res = couponController.getCoupons(10);
+  const res = couponController.getCoupons(11);
   console.log('REEES: ', res);
 }
 bootstrap();
