@@ -1,10 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { RandomStringCouponGenerator } from './algorithms/random-string';
+import algorithms from './algorithms/algorithms';
 import { CouponGeneratorController } from './coupon-generator.controller';
 import { CouponGenerator } from './interfaces/coupon.interface';
-
-console.log('envv: ', process.env.DATABASE_USER);
 
 @Module({
   imports: [ConfigModule],
@@ -13,7 +11,10 @@ console.log('envv: ', process.env.DATABASE_USER);
     {
       provide: CouponGenerator,
       useFactory: (configService: ConfigService) => {
-        return new RandomStringCouponGenerator();
+        const algorithmKey = configService.get('ALGORITHM');
+        const algorithm = algorithms[algorithmKey];
+        if (!algorithm) throw new Error('Invalid algorithm');
+        return algorithm();
       },
       inject: [ConfigService],
     },
